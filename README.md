@@ -51,3 +51,24 @@ The 24-pin ROM is meant to sit in the back of the socket so that the 4 pins clos
 
 The software should just build using VS Code.
 It's basically a 'hello world' build environment for C++ programming using the Pi Pico that has been extended to be a quick & dirty ROM reader.
+
+Run the program, and if everything is going OK, the LED will blink as it repeatedly reads the ROM contents into a buffer.
+Each time after the first time, the program verifies that the new read matches the data read the first time around.
+If the program stops at a breakpoint, there is a problem.
+The comments around the area of the breakpoints will tell you what is wrong.
+If there are no problems, you can stop execution of the program anytime, for example, by setting a debugger breakpoint where the program sleeps to make the LED blink.
+
+Once stopped, find out the start address of the 'contents' buffer.
+One way is to use the debugger's memory window, and ask it to dump memory starting at "&contents[0]". That will tell you the start address.
+In my case, it was at 0x20001000.
+
+In the debug console window tab, type the following GDB command:
+
+    dump binary memory <full-path-to-some-location>/rom.bin 0x20001000 0x20001800
+
+GDB will write a binary file called 'rom.bin' in the location you specified.
+It will contain the 2K bytes in the ROM that were read and verified for consistency.
+
+Once on your machine, you can use 'od' to dump the rom.bin data in human-readable fashion, or the linux 'hexdiff' command to compare it to a different binary file.
+
+This whole process could be improved, but like I said, it was developed as a "quick and dirty" because I was more interested in verifying my ROMs and getting my machine working than creating a beautiful, generic ROM reader.
