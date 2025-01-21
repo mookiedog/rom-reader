@@ -40,3 +40,14 @@ The software assumes that the pico is wired to the ROM as follows:
 |OE|GP28|34|20|ROM OE (Active LOW)|
 
 To read 9316 ROMs, make sure to power the ROM pin 24 (VCC) with exactly 3.5 volts.
+
+You will end up with a nice wad of wires, as below:
+![](images/rom-reader.jpg)
+
+I wired things to a 28 pin socket instead of the 24 pin socket because I already had one mounted on a breadboard.
+The 24-pin ROM is meant to sit in the back of the socket so that the 4 pins closest to the camera are unused.
+
+## Software
+
+The software should just build using VS Code.
+It's basically a 'hello world' build environment for C++ programming using the Pi Pico that has been extended to be a quick & dirty ROM reader.
